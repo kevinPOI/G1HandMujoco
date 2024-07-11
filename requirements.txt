@@ -1,0 +1,4 @@
+mujoco
+dm-control
+numpy
+gymnasium
