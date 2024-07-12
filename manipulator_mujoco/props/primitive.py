@@ -6,7 +6,7 @@ class Primitive(object):
     A base class representing a primitive object in a simulation environment.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, _mjfc_root, **kwargs):
         """
         Initialize the Primitive object.
 
@@ -14,9 +14,10 @@ class Primitive(object):
             **kwargs: Additional keyword arguments for configuring the primitive.
         """
         self._mjcf_model = mjcf.RootElement()
-
+        self._mjcf_root = _mjfc_root
         # Add a geometric element to the worldbody
-        self._geom = self._mjcf_model.worldbody.add("geom", **kwargs)
+        self._geom = self._mjcf_root.worldbody.add("body", name="box", mocap=False)
+        self._geom.add("geom", **kwargs)
 
     @property
     def geom(self):

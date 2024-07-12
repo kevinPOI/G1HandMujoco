@@ -6,14 +6,16 @@ import mujoco.viewer
 import gymnasium as gym
 from gymnasium import spaces
 from manipulator_mujoco.arenas import StandardArena
-from manipulator_mujoco.robots import AuboI5, AG95, G1Hand
+from manipulator_mujoco.robots import AuboI5, AG95, G1Hand, Block
 from manipulator_mujoco.props import Primitive
 from manipulator_mujoco.mocaps import Target
 from manipulator_mujoco.controllers import OperationalSpaceController, JointEffortController
 from manipulator_mujoco.utils.transform_utils import (
     mat2quat,
 )
-
+counter = 0
+m1_counter = 0
+mode = 0
 class AuboI5Env(gym.Env):
 
     metadata = {
@@ -47,7 +49,7 @@ class AuboI5Env(gym.Env):
 
         # aubo i5 arm
         self._arm = AuboI5()
-        
+        self._block = Block()
         # ag95 gripper
         #self._gripper = AG95()
         self._gripper = G1Hand()
@@ -55,7 +57,7 @@ class AuboI5Env(gym.Env):
         self._arm.attach_tool(self._gripper.mjcf_model, pos=[0, 0, 0], quat=[0, 0, 0, 1])
 
         # small box to be manipulated
-        self._box = Primitive(type="box", size=[0.03, 0.03, 0.03], pos=[0,0,0.02], rgba=[1, 0, 0, 1], friction=[1, 0.3, 0.0001])
+        #self._box = Primitive(self._arena.mjcf_model, type="box", size=[0.03, 0.03, 0.03], pos=[0,0,0.02], rgba=[1, 0, 0, 1], friction=[1, 0.3, 0.0001])
 
         # attach arm to arena
         self._arena.attach(
@@ -64,7 +66,7 @@ class AuboI5Env(gym.Env):
 
         # attach box to arena as free joint
         self._arena.attach_free(
-            self._box.mjcf_model, pos=[0.5,0,0]
+            self._block.mjcf_model, pos=[0.5,0,0]
         )
        
         # generate model
@@ -116,7 +118,13 @@ class AuboI5Env(gym.Env):
         ee_pos = self._physics.bind(eef_site).xpos
         ee_quat = mat2quat(self._physics.bind(eef_site).xmat.reshape(3, 3))
         ee_pose = np.concatenate([ee_pos, ee_quat])
-        return ee_pose
+
+
+        block = self._physics.bind(self._block._mjcf_root.find("body", "block"))
+        block_pos = block.xpos
+        block_quat = mat2quat(block.xmat.reshape(3, 3))
+        block_pose = np.concatenate([block_pos, block_quat])
+        return ee_pose, block_pose
 
     def _get_info(self) -> dict:
         # TODO come up with an info dict that makes sense for your RL task
@@ -140,35 +148,52 @@ class AuboI5Env(gym.Env):
         joint_pos = self._physics.bind(self._gripper.joints).qpos
         joint_vel = self._physics.bind(self._gripper.joints).qvel
         #print("err", (target - joint_pos)," joint_vel: ", joint_vel)
-        effort = (target - joint_pos)*50 - joint_vel * 0.4
+        effort = (target - joint_pos)*70 - joint_vel * 0.3
         #self._physics.bind(self._gripper.joint).qfrc_applied = effort
         self._physics.bind(self._gripper.actuators).ctrl = effort
     def step(self, action) -> tuple:
         # TODO use the action to control the arm
-        
-
+        global counter
+        global m1_counter
+        global mode
+        counter += 1
+        ee_pose, block_pose = self._get_obs()
 
         # get mocap target pose
-        target_pose = self._target.get_mocap_pose(self._physics)
-        dest_pose = [0.5,0.2,0.2,0,0,0,1]
+        #target_pose = self._target.get_mocap_pose(self._physics)
+        target_pose = block_pose
+        dest_pose = np.asarray([0.5,0.2,0.2,0,0,0,1])
 
         # run OSC controller to move to target pose
-        #print("dist to block: ", np.linalg.norm(self._get_obs()[0:3] - np.array([0,0,0.02])))
         m = np.asarray([0,-1,-1,1,1,1,1])
         b = np.asarray([0,0,0,0.2,0.2,0.2,0.2])
-        target = action * m + b
-        self.gripper_to(target)
-        if(np.linalg.norm(self._get_obs()[0:3] - np.array([0.5,0,0.02]))) < 0.5:
-            #arm_eef_pos = self._physics.bind(self._arm.eef_site).xpos
-            #self._physics.bind(self._gripper.joint).qfrc_applied = 4
-            #print("eef_site: ", joint_pos)
-            #print("arm_eef_site: ", arm_eef_pos)
-            self._controller.run(target_pose)
-            #self._gripper_controller.run(2)
+        if np.linalg.norm(ee_pose[:2] - block_pose[:2]) < 0.1 and np.linalg.norm(ee_pose[2] - block_pose[2]) < 0.04:
+            mode = 1
+        if mode == 1:
+            action = 0.5
+            m1_counter += 1
         else:
-            #self._physics.bind(self._gripper.joint).qfrc_applied = -3
-            self._controller.run(target_pose)
-
+            action = 0
+        if m1_counter > 800:
+            target_pose = dest_pose
+        
+        grip_target = action * m + b
+        self.gripper_to(grip_target)
+        
+        if counter % 10 == 0:
+            print("ee_pose: ", ee_pose, "\ntarget_pose: ", target_pose)
+        
+        # if(np.linalg.norm(self._get_obs()[0:3] - np.array([0.5,0,0.02]))) < 0.5:
+        #     #arm_eef_pos = self._physics.bind(self._arm.eef_site).xpos
+        #     #self._physics.bind(self._gripper.joint).qfrc_applied = 4
+        #     #print("eef_site: ", joint_pos)
+        #     #print("arm_eef_site: ", arm_eef_pos)
+        #     self._controller.run(target_pose)
+        #     #self._gripper_controller.run(2)
+        # else:
+        #     #self._physics.bind(self._gripper.joint).qfrc_applied = -3
+        #     self._controller.run(target_pose)
+        self._controller.run(target_pose)
 
         # step physics
         self._physics.step()
