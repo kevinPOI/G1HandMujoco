@@ -1,0 +1,29 @@
+<!-- <mujoco model="block">
+  <compiler angle="radian">
+  <worldbody>
+    <body name="cube" pos="0 0 1">
+      <geom name="cube_geom" type="box" size="0.1 0.1 0.1" rgba="1 0 0 1"/>
+      <joint name="cube_free" type="free"/>
+    </body>
+  </worldbody>
+  </compiler>
+</mujoco> -->
+<mujoco model="lego_1x8">
+    <compiler angle="radian" meshdir = "meshes"/>
+    <asset>
+      <mesh name="mesh" file="b1x8.stl"/>
+    </asset>
+    <worldbody>
+        <!-- Define the block -->
+        <body name="block" pos="0 0 0">
+            <inertial pos="0.0 0.0 0.0" quat="1 0 0 0" mass="0.003" diaginertia="0.000001 0.000001 0.000001"/>
+            <geom type="mesh" rgba="0.9 0.4 0.1 1" mesh="mesh"/>
+            <!-- <joint name="block_free" type="free"/> -->
+        </body>
+    </worldbody>
+    
+    <actuator>
+        <!-- Define actuators if needed -->
+    </actuator>
+</mujoco>
+

@@ -6,7 +6,7 @@ import mujoco.viewer
 import gymnasium as gym
 from gymnasium import spaces
 from manipulator_mujoco.arenas import StandardArena
-from manipulator_mujoco.robots import AuboI5, AG95, G1Hand, Block, GP4
+from manipulator_mujoco.robots import AuboI5, AG95, G1Hand, Block, GP4,Lego
 from manipulator_mujoco.props import Primitive
 from manipulator_mujoco.mocaps import Target
 from manipulator_mujoco.controllers import OperationalSpaceController, JointEffortController
@@ -98,7 +98,7 @@ class GP4Env(gym.Env):
         # aubo i5 arm
         self._arm = GP4()
         self._block = Block()
-        # ag95 gripper
+        self._lego_2x8 = Lego("lego_2x8.xml")
         #self._gripper = AG95()
         self._gripper = G1Hand()
         # attach gripper to arm
@@ -114,8 +114,9 @@ class GP4Env(gym.Env):
 
         # attach box to arena as free joint
         self._arena.attach_free(
-            self._block.mjcf_model, pos=[0.6,0,0]
+            self._block.mjcf_model, pos=[0.6,0.2,0]
         )
+        self._arena.attach_free(self._lego_2x8.mjcf_model, pos = [0.6, 0, 0], quat=[0.7,0,0, 0.7])
        
         # generate model
         self._physics = mjcf.Physics.from_mjcf_model(self._arena.mjcf_model)
@@ -129,8 +130,8 @@ class GP4Env(gym.Env):
             max_effort=1500.0,
             kp=3000,
             ko=3000,
-            kv=300,
-            vmax_xyz=1.0,
+            kv=100,
+            vmax_xyz=1.5,
             vmax_abg=2.0,
         )
 
@@ -199,11 +200,11 @@ class GP4Env(gym.Env):
         effort = (target - joint_pos)*70 - joint_vel * 0.3
         #self._physics.bind(self._gripper.joint).qfrc_applied = effort
         self._physics.bind(self._gripper.actuators).ctrl = effort
-    def step(self, action) -> tuple:
+    def step(self, mode) -> tuple:
         # TODO use the action to control the arm
         global counter
         global m1_counter
-        global mode
+        #global mode
         counter += 1
         ee_pose, block_pose = self._get_obs()
 
@@ -212,21 +213,27 @@ class GP4Env(gym.Env):
         
         #target_pose = block_pose
         target_pose[3:] = set_y_rotation(ee_pose[3:],0)#ignore rotational target
-        target_pose[3:] = set_x_rotation(target_pose[3:], 3.64)
+        target_pose[3:] = set_x_rotation(target_pose[3:], 3.44)
         dest_pose = np.asarray([0.5,0.2,0.2,0,0,0,1])
 
         # run OSC controller to move to target pose
-        m = np.asarray([0,-1,-1,1,1,1,1])
-        b = np.asarray([0,-0.3,-0.6,0.3,0.3,0.3,0.3])#[thumb_pan, thumb1, thumb2, index_1, index_2, middle_1, middle_2]
-        if np.linalg.norm(ee_pose[:2] - block_pose[:2]) < 0.1 and np.linalg.norm(ee_pose[2] - block_pose[2]) < 0.04:
-            mode = 0
-        if mode == 1:
-            action = 0.5
-            m1_counter += 1
-        else:
+        block_coe = np.asarray([0,-1,-1,1,1,1,1])
+        lego_coe = np.asarray([0,-0.3,-0.3,1,1,1,1])
+        m = lego_coe
+        block_init = np.asarray([0,-0.3,-0.6,0.3,0.3,0.3,0.3])#[thumb_pan, thumb1, thumb2, index_1, index_2, middle_1, middle_2]
+        lego_init = np.asarray([0,-0.4,-0.4,0.9,0.6,0.9,0.6])
+        b = lego_init
+        # if np.linalg.norm(ee_pose[:2] - block_pose[:2]) < 0.1 and np.linalg.norm(ee_pose[2] - block_pose[2]) < 0.04:
+        #     mode = 0
+        if mode == 0:
             action = 0
-        if m1_counter > 800:
-            target_pose = dest_pose
+        else:
+            action = mode
+        #     m1_counter += 1
+        # else:
+        #     action = 0
+        # if m1_counter > 800:
+        #     target_pose = dest_pose
         
         grip_target = action * m + b
         self.gripper_to(grip_target)
@@ -308,3 +315,4 @@ class GP4Env(gym.Env):
         """
         if self._viewer is not None:
             self._viewer.close()
+

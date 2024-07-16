@@ -13,7 +13,11 @@ def take_input():
     global mode
     while(True):
         n = input()
-        mode = float(n)
+        try:
+            mode = float(n)
+        except:
+            print("wrong input")
+            continue
 t1 = threading.Thread(target=take_input)
 t1.daemon = True
 t1.start()
