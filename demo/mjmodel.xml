@@ -1,0 +1,238 @@
+<mujoco model="unnamed_model">
+  <compiler angle="radian"/>
+  <option integrator="implicitfast"/>
+  <statistic meansize="0.144785" extent="1.23314" center="0.025392 2.0634e-05 -0.245975"/>
+  <default class="main">
+    <default class="/"/>
+    <default class="aubo_i5/">
+      <default class="aubo_i5/visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2" density="0"/>
+      </default>
+      <default class="aubo_i5/collision">
+        <geom type="mesh" group="3" density="2700"/>
+      </default>
+    </default>
+    <default class="aubo_i5/g1/">
+      <joint armature="0.01" damping="0.5" frictionloss="0.1"/>
+    </default>
+    <default class="simple_block/"/>
+  </default>
+  <asset>
+    <texture type="2d" name="//unnamed_texture_0" builtin="checker" rgb1="0.2 0.3 0.4" rgb2="0.3 0.4 0.5" width="300" height="300"/>
+    <material name="grid" class="/" texture="//unnamed_texture_0" texrepeat="5 5" reflectance="0.2"/>
+    <material name="aubo_i5/Opaque(63,63,63)" class="aubo_i5/" rgba="0.25098 0.25098 0.25098 1"/>
+    <material name="aubo_i5/Opaque(229,234,237)" class="aubo_i5/" rgba="0.898039 0.917647 0.929412 1"/>
+    <material name="aubo_i5/Opaque(232,133,0)" class="aubo_i5/" rgba="0.909804 0.521569 0 1"/>
+    <material name="aubo_i5/Opaque(202,209,238)" class="aubo_i5/" rgba="0.792157 0.819608 0.933333 1"/>
+    <material name="aubo_i5/Opaque(255,255,255)" class="aubo_i5/"/>
+    <mesh name="aubo_i5/base_link_0" class="aubo_i5/" file="base_link_0-d45ef6b17938e61c1b6ba1f668a7778899575b4c.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/base_link_1" class="aubo_i5/" file="base_link_1-ea514c87381cfd75147646e4f92c6eb00559e7cc.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/shoulder_link_0" class="aubo_i5/" file="shoulder_link_0-55a96464f8e71b407c007d15913ebf587e18d1d3.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/shoulder_link_1" class="aubo_i5/" file="shoulder_link_1-3ea81511cbf652c867a8b04aac49104f275f8aad.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/upper_arm_link_0" class="aubo_i5/" file="upper_arm_link_0-8a15670ae79b8fa6bffe5a3cedabb4de4c7d13d0.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/upper_arm_link_1" class="aubo_i5/" file="upper_arm_link_1-d662f599de84b90973262e33b3611f67cc4521bc.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/forearm_link_0" class="aubo_i5/" file="forearm_link_0-437983b8f8c33316d46dfe1460409c944ea70cc3.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/forearm_link_1" class="aubo_i5/" file="forearm_link_1-10fe02cae4a4de71d4aff25cf1ef57750290d5c0.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_1_link_0" class="aubo_i5/" file="wrist_1_link_0-6a694d552516566fd55ea8b640d8c7a61f307dc1.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_1_link_1" class="aubo_i5/" file="wrist_1_link_1-16adc6f6352d7acc7fd21f05721c7e580e005343.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_2_link_0" class="aubo_i5/" file="wrist_2_link_0-2ea39027a0c2f1bc41db2ff99baf76c1e34d4784.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_2_link_1" class="aubo_i5/" file="wrist_2_link_1-f689cfbfa460d83c40fd985402914b1f49267b1b.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_3_link_0" class="aubo_i5/" file="wrist_3_link_0-e03106ad404dcec37c56b1f3f0052fa99f0d3442.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_3_link_1" class="aubo_i5/" file="wrist_3_link_1-ead6becba13133e8a8c0b80fada4a1e1eaa55ece.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_3_link_2" class="aubo_i5/" file="wrist_3_link_2-37e749ac2e5aa99bffdeb7ac3d2e7502cd1972d4.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_3_link_3" class="aubo_i5/" file="wrist_3_link_3-c9a1cf0048dff1e8300f39c63614013b1f2b8ca1.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/base_link_collision" class="aubo_i5/" file="base_link_collision-8763ce8a03542f0f00953957f1892fad0549d583.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/shoulder_link_collision" class="aubo_i5/" file="shoulder_link_collision-6ce9b762cd6f879a73121077e2814f1ef82ce813.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/upper_arm_link_collision_0" class="aubo_i5/" file="upper_arm_link_collision_0-e8cdf8adeb32787657f2f0ffd5c8853980764b76.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/upper_arm_link_collision_1" class="aubo_i5/" file="upper_arm_link_collision_1-5f1f5ab2d743aafb2238cbe4a17da322594216b2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/upper_arm_link_collision_2" class="aubo_i5/" file="upper_arm_link_collision_2-9455f04cf0f5d13467159ff4a989098e5b3f5bf5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/forearm_link_collision_0" class="aubo_i5/" file="forearm_link_collision_0-546f8ccb647ce0e1425cd355fd5627658ea9a91a.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/forearm_link_collision_1" class="aubo_i5/" file="forearm_link_collision_1-1b62fb2094e0207009a443d98cabb643c55f7614.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/forearm_link_collision_2" class="aubo_i5/" file="forearm_link_collision_2-25eec2f2a3c84b8d527434d6d87403a91b5615bd.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_1_link_collision" class="aubo_i5/" file="wrist_1_link_collision-fe7652903bf4462154dec0753207bf92d88b4f05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_2_link_collision" class="aubo_i5/" file="wrist_2_link_collision-31ac544f311d8c7fbff2fa0cc68f3b91a43dfbc4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/wrist_3_link_collision" class="aubo_i5/" file="wrist_3_link_collision-d9de95189ae4d1b5347602cb771906294c3c285f.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="aubo_i5/g1/pelvis" class="aubo_i5/g1/" file="pelvis-5b59c2576d569518784d1516c3bd5594e8f2cd16.STL"/>
+    <mesh name="aubo_i5/g1/pelvis_contour_link" class="aubo_i5/g1/" file="pelvis_contour_link-0f6da4a46867fe6d073b413d294202b8d0c2215c.STL"/>
+    <mesh name="aubo_i5/g1/left_hip_pitch_link" class="aubo_i5/g1/" file="left_hip_pitch_link-a8bfc72828c46fc5e49f1aef011a5775c0a61a30.STL"/>
+    <mesh name="aubo_i5/g1/left_hip_roll_link" class="aubo_i5/g1/" file="left_hip_roll_link-e7cd36afdb8a98ff991ce3cb58a913855d7f1ea8.STL"/>
+    <mesh name="aubo_i5/g1/left_hip_yaw_link" class="aubo_i5/g1/" file="left_hip_yaw_link-ed3ff923005f25448548420cc68242c989997e70.STL"/>
+    <mesh name="aubo_i5/g1/left_knee_link" class="aubo_i5/g1/" file="left_knee_link-78180b9fe8d3f2c261484eb41928022e3969bac7.STL"/>
+    <mesh name="aubo_i5/g1/left_ankle_pitch_link" class="aubo_i5/g1/" file="left_ankle_pitch_link-7d4cb1dae4009bf657dfa6b46110e21b6d9622e3.STL"/>
+    <mesh name="aubo_i5/g1/left_ankle_roll_link" class="aubo_i5/g1/" file="left_ankle_roll_link-99ff3c9d67ce6be89af54e124511becb40fe585c.STL"/>
+    <mesh name="aubo_i5/g1/right_hip_pitch_link" class="aubo_i5/g1/" file="right_hip_pitch_link-cda8b1e6a5003dff14371664b37ac5582598f6b3.STL"/>
+    <mesh name="aubo_i5/g1/right_hip_roll_link" class="aubo_i5/g1/" file="right_hip_roll_link-af0f6db45c0a1a26f3ec4799d9153d40807912f0.STL"/>
+    <mesh name="aubo_i5/g1/right_hip_yaw_link" class="aubo_i5/g1/" file="right_hip_yaw_link-8dc1847f3ab9a75dd0e2a345aab4396eb01ce12d.STL"/>
+    <mesh name="aubo_i5/g1/right_knee_link" class="aubo_i5/g1/" file="right_knee_link-a96dca86f562de012738d18966bebdb73a0d35a3.STL"/>
+    <mesh name="aubo_i5/g1/right_ankle_pitch_link" class="aubo_i5/g1/" file="right_ankle_pitch_link-28b62e1b55a0661783fff4777f071dc5e1257cbb.STL"/>
+    <mesh name="aubo_i5/g1/right_ankle_roll_link" class="aubo_i5/g1/" file="right_ankle_roll_link-538f7bff7a22f5807029cf204d79402324b571ec.STL"/>
+    <mesh name="aubo_i5/g1/torso_link" class="aubo_i5/g1/" file="torso_link-809c9bc91356ee9d0cddd2f64dfcfba6faca0481.STL"/>
+    <mesh name="aubo_i5/g1/head_link" class="aubo_i5/g1/" file="head_link-cb5b3c0341a11411d258b9184db6c7d8d38dbfba.STL"/>
+    <mesh name="aubo_i5/g1/left_shoulder_pitch_link" class="aubo_i5/g1/" file="left_shoulder_pitch_link-0eafd9457e7962e64a09f52d32adc85b288a49b0.STL"/>
+    <mesh name="aubo_i5/g1/left_shoulder_roll_link" class="aubo_i5/g1/" file="left_shoulder_roll_link-34a64b6f81ddca483f1e2d26cebe155e701ac7f4.STL"/>
+    <mesh name="aubo_i5/g1/left_shoulder_yaw_link" class="aubo_i5/g1/" file="left_shoulder_yaw_link-fa361a4ae9a7c2664a25ee91e49bec3d4e92ddf3.STL"/>
+    <mesh name="aubo_i5/g1/left_elbow_pitch_link" class="aubo_i5/g1/" file="left_elbow_pitch_link-8887573d5775e6e06774594f270976f3264fe7b6.STL"/>
+    <mesh name="aubo_i5/g1/left_elbow_roll_link" class="aubo_i5/g1/" file="left_elbow_roll_link-688f5b246b0777b917034a419ec34a31dde3c673.STL"/>
+    <mesh name="aubo_i5/g1/right_shoulder_pitch_link" class="aubo_i5/g1/" file="right_shoulder_pitch_link-78fae3e6cb1bbb62e6f0b59fce3f81592cc4c346.STL"/>
+    <mesh name="aubo_i5/g1/right_shoulder_roll_link" class="aubo_i5/g1/" file="right_shoulder_roll_link-c3a6e2baf4790e35829c59e55f431a02faaaa7ac.STL"/>
+    <mesh name="aubo_i5/g1/right_shoulder_yaw_link" class="aubo_i5/g1/" file="right_shoulder_yaw_link-2bb29de4cdffb46599ad39ca4c50c3509cafd622.STL"/>
+    <mesh name="aubo_i5/g1/right_elbow_pitch_link" class="aubo_i5/g1/" file="right_elbow_pitch_link-5c6faf9b7d215462c4bb69964a631e5fc57d51bd.STL"/>
+    <mesh name="aubo_i5/g1/right_elbow_roll_link" class="aubo_i5/g1/" file="right_elbow_roll_link-18690e48fff838f90f2e7fe5721d198ca6860d32.STL"/>
+    <mesh name="aubo_i5/g1/logo_link" class="aubo_i5/g1/" file="logo_link-3a4de72ffcb52be57ba0b8726262316b5e4f1acd.STL"/>
+    <mesh name="aubo_i5/g1/left_palm_link" class="aubo_i5/g1/" file="left_palm_link-699acc1aa625ad71ead457f92c3ae4ba43646ec6.STL"/>
+    <mesh name="aubo_i5/g1/left_zero_link" class="aubo_i5/g1/" file="left_zero_link-56a3f88da3f7dbde4b71761e91659ed961d00952.STL"/>
+    <mesh name="aubo_i5/g1/left_one_link" class="aubo_i5/g1/" file="left_one_link-53f10db58c1e18c4bfd081affd87d7c2e3f2e45c.STL"/>
+    <mesh name="aubo_i5/g1/left_two_link" class="aubo_i5/g1/" file="left_two_link-88abe6d09386b447f12ffafb64ebf49d1cdad8ed.STL"/>
+    <mesh name="aubo_i5/g1/left_three_link" class="aubo_i5/g1/" file="left_three_link-8ae5537b6eeb6b168fb56239b485973408de377f.STL"/>
+    <mesh name="aubo_i5/g1/left_four_link" class="aubo_i5/g1/" file="left_four_link-2be63b3d80b7ff8742baa7fd21a0340b2bd7a261.STL"/>
+    <mesh name="aubo_i5/g1/left_five_link" class="aubo_i5/g1/" file="left_five_link-8ae5537b6eeb6b168fb56239b485973408de377f.STL"/>
+    <mesh name="aubo_i5/g1/left_six_link" class="aubo_i5/g1/" file="left_six_link-b6d0bc335e249d5e21309598b088b89370282d8b.STL"/>
+    <mesh name="aubo_i5/g1/right_palm_link" class="aubo_i5/g1/" file="right_palm_link-4cf24b8d4901118e5c232ea9a4e4e054d54e7b95.STL"/>
+    <mesh name="aubo_i5/g1/right_zero_link" class="aubo_i5/g1/" file="right_zero_link-d911a5b699e93fc976db256738ec81400bf387d4.STL"/>
+    <mesh name="aubo_i5/g1/right_one_link" class="aubo_i5/g1/" file="right_one_link-99812d5cbafe57adb47113b5b0b0a0a26f5aab0c.STL"/>
+    <mesh name="aubo_i5/g1/right_two_link" class="aubo_i5/g1/" file="right_two_link-56abdafa154db81473f46370774a20a4cb8a9c8f.STL"/>
+    <mesh name="aubo_i5/g1/right_three_link" class="aubo_i5/g1/" file="right_three_link-86cddc70bb04870d2cddf332111f877879fc8ed1.STL"/>
+    <mesh name="aubo_i5/g1/right_four_link" class="aubo_i5/g1/" file="right_four_link-dfdb7edf6e00388555d9eea4ac16f47c0d94e5c9.STL"/>
+    <mesh name="aubo_i5/g1/right_five_link" class="aubo_i5/g1/" file="right_five_link-86cddc70bb04870d2cddf332111f877879fc8ed1.STL"/>
+    <mesh name="aubo_i5/g1/right_six_link" class="aubo_i5/g1/" file="right_six_link-dfdb7edf6e00388555d9eea4ac16f47c0d94e5c9.STL"/>
+  </asset>
+  <worldbody>
+    <geom name="//unnamed_geom_0" class="/" size="2 2 0.1" type="plane" material="grid"/>
+    <light name="//unnamed_light_0" class="/" pos="-2 -1 3" dir="0.666667 0.333333 -0.666667"/>
+    <light name="//unnamed_light_1" class="/" pos="2 -1 3" dir="-0.666667 0.333333 -0.666667"/>
+    <body name="mocap" mocap="true">
+      <geom name="//unnamed_geom_1" class="/" size="0.015 0.015 0.015" type="box" contype="0" conaffinity="0" rgba="1 0 0 0.2"/>
+    </body>
+    <body name="aubo_i5/">
+      <body name="aubo_i5/base_link">
+        <inertial pos="5.28033e-09 0.00159669 0.0165705" quat="0.495398 0.50456 -0.50456 0.495398" mass="1.43822" diaginertia="0.0055319 0.003103 0.0028571"/>
+        <geom name="aubo_i5//unnamed_geom_0" class="aubo_i5/visual" material="aubo_i5/Opaque(229,234,237)" mesh="aubo_i5/base_link_0"/>
+        <geom name="aubo_i5//unnamed_geom_1" class="aubo_i5/visual" material="aubo_i5/Opaque(63,63,63)" mesh="aubo_i5/base_link_1"/>
+        <geom name="aubo_i5//unnamed_geom_2" class="aubo_i5/collision" mesh="aubo_i5/base_link_collision"/>
+        <body name="aubo_i5/shoulder_link" pos="0 0 0.0435">
+          <inertial pos="-4.18504e-07 -0.00538388 0.0698852" quat="0.997139 0.0755851 0 0" mass="3.99774" diaginertia="0.010612 0.0103292 0.00776575"/>
+          <joint name="aubo_i5/shoulder_pan_joint" class="aubo_i5/" pos="0 0 0" axis="0 0 1" range="-3.04 3.04"/>
+          <geom name="aubo_i5//unnamed_geom_3" class="aubo_i5/visual" pos="0 0 -0.0435" material="aubo_i5/Opaque(63,63,63)" mesh="aubo_i5/shoulder_link_0"/>
+          <geom name="aubo_i5//unnamed_geom_4" class="aubo_i5/visual" pos="0 0 -0.0435" material="aubo_i5/Opaque(232,133,0)" mesh="aubo_i5/shoulder_link_1"/>
+          <geom name="aubo_i5//unnamed_geom_5" class="aubo_i5/collision" pos="0 0 -0.0435" mesh="aubo_i5/shoulder_link_collision"/>
+          <body name="aubo_i5/upper_arm_link" pos="0 -0.062 0.0785">
+            <inertial pos="4.51558e-10 -0.0717894 0.204" quat="1 0 -1.45662e-06 0" mass="10.2644" diaginertia="0.367413 0.361705 0.024156"/>
+            <joint name="aubo_i5/shoulder_lift_joint" class="aubo_i5/" pos="0 0 0" axis="0 -1 0" range="-3.04 3.04"/>
+            <geom name="aubo_i5//unnamed_geom_6" class="aubo_i5/visual" pos="0 0.062 -0.122" material="aubo_i5/Opaque(63,63,63)" mesh="aubo_i5/upper_arm_link_0"/>
+            <geom name="aubo_i5//unnamed_geom_7" class="aubo_i5/visual" pos="0 0.062 -0.122" material="aubo_i5/Opaque(232,133,0)" mesh="aubo_i5/upper_arm_link_1"/>
+            <geom name="aubo_i5//unnamed_geom_8" class="aubo_i5/collision" pos="0 0.062 -0.122" mesh="aubo_i5/upper_arm_link_collision_0"/>
+            <geom name="aubo_i5//unnamed_geom_9" class="aubo_i5/collision" pos="0 0.062 -0.122" mesh="aubo_i5/upper_arm_link_collision_1"/>
+            <geom name="aubo_i5//unnamed_geom_10" class="aubo_i5/collision" pos="0 0.062 -0.122" mesh="aubo_i5/upper_arm_link_collision_2"/>
+            <body name="aubo_i5/forearm_link" pos="0 0 0.408">
+              <inertial pos="-8.5989e-08 0.0377796 0.186257" quat="0.999989 -0.00464387 0 0" mass="5.71706" diaginertia="0.110129 0.109714 0.00516198"/>
+              <joint name="aubo_i5/elbow_joint" class="aubo_i5/" pos="0 0 0" axis="0 1 0" range="-3.04 3.04"/>
+              <geom name="aubo_i5//unnamed_geom_11" class="aubo_i5/visual" pos="0 0.062 -0.53" material="aubo_i5/Opaque(63,63,63)" mesh="aubo_i5/forearm_link_0"/>
+              <geom name="aubo_i5//unnamed_geom_12" class="aubo_i5/visual" pos="0 0.062 -0.53" material="aubo_i5/Opaque(232,133,0)" mesh="aubo_i5/forearm_link_1"/>
+              <geom name="aubo_i5//unnamed_geom_13" class="aubo_i5/collision" pos="0 0.062 -0.53" mesh="aubo_i5/forearm_link_collision_0"/>
+              <geom name="aubo_i5//unnamed_geom_14" class="aubo_i5/collision" pos="0 0.062 -0.53" mesh="aubo_i5/forearm_link_collision_1"/>
+              <geom name="aubo_i5//unnamed_geom_15" class="aubo_i5/collision" pos="0 0.062 -0.53" mesh="aubo_i5/forearm_link_collision_2"/>
+              <body name="aubo_i5/wrist_1_link" pos="0 -0.0175 0.376">
+                <inertial pos="4.04369e-07 -0.0378176 0.010378" quat="0.996128 0.0879183 0 0" mass="1.19598" diaginertia="0.001481 0.00143005 0.000971945"/>
+                <joint name="aubo_i5/wrist_1_joint" class="aubo_i5/" pos="0 0 0" axis="0 -1 0" range="-3.04 3.04"/>
+                <geom name="aubo_i5//unnamed_geom_16" class="aubo_i5/visual" pos="0 0.0795 -0.906" material="aubo_i5/Opaque(63,63,63)" mesh="aubo_i5/wrist_1_link_0"/>
+                <geom name="aubo_i5//unnamed_geom_17" class="aubo_i5/visual" pos="0 0.0795 -0.906" material="aubo_i5/Opaque(232,133,0)" mesh="aubo_i5/wrist_1_link_1"/>
+                <geom name="aubo_i5//unnamed_geom_18" class="aubo_i5/collision" pos="0 0.0795 -0.906" mesh="aubo_i5/wrist_1_link_collision"/>
+                <body name="aubo_i5/wrist_2_link" pos="0 -0.042 0.06056">
+                  <inertial pos="-3.83591e-07 -0.0103783 0.0378173" quat="0.766536 0.642201 0 0" mass="1.19598" diaginertia="0.001481 0.00143005 0.000971945"/>
+                  <joint name="aubo_i5/wrist_2_joint" class="aubo_i5/" pos="0 0 0" axis="0 0 1" range="-3.04 3.04"/>
+                  <geom name="aubo_i5//unnamed_geom_19" class="aubo_i5/visual" pos="0 0.1215 -0.96656" material="aubo_i5/Opaque(63,63,63)" mesh="aubo_i5/wrist_2_link_0"/>
+                  <geom name="aubo_i5//unnamed_geom_20" class="aubo_i5/visual" pos="0 0.1215 -0.96656" material="aubo_i5/Opaque(232,133,0)" mesh="aubo_i5/wrist_2_link_1"/>
+                  <geom name="aubo_i5//unnamed_geom_21" class="aubo_i5/collision" pos="0 0.1215 -0.96656" mesh="aubo_i5/wrist_2_link_collision"/>
+                  <body name="aubo_i5/wrist_3_link" pos="0 -0.06056 0.042">
+                    <inertial pos="4.15409e-09 -0.0185535 0.000352259" quat="0.707088 -0.00519777 0.00519777 0.707088" mass="0.192478" diaginertia="0.000169015 0.000104 0.000100985"/>
+                    <joint name="aubo_i5/wrist_3_joint" class="aubo_i5/" pos="0 0 0" axis="0 -1 0" range="-3.04 3.04"/>
+                    <geom name="aubo_i5//unnamed_geom_22" class="aubo_i5/visual" pos="0 0.18206 -1.00856" material="aubo_i5/Opaque(229,234,237)" mesh="aubo_i5/wrist_3_link_0"/>
+                    <geom name="aubo_i5//unnamed_geom_23" class="aubo_i5/visual" pos="0 0.18206 -1.00856" material="aubo_i5/Opaque(63,63,63)" mesh="aubo_i5/wrist_3_link_1"/>
+                    <geom name="aubo_i5//unnamed_geom_24" class="aubo_i5/visual" pos="0 0.18206 -1.00856" material="aubo_i5/Opaque(63,63,63)" mesh="aubo_i5/wrist_3_link_2"/>
+                    <geom name="aubo_i5//unnamed_geom_25" class="aubo_i5/visual" pos="0 0.18206 -1.00856" material="aubo_i5/Opaque(63,63,63)" mesh="aubo_i5/wrist_3_link_3"/>
+                    <geom name="aubo_i5//unnamed_geom_26" class="aubo_i5/collision" pos="0 0.18206 -1.00856" mesh="aubo_i5/wrist_3_link_collision"/>
+                    <body name="aubo_i5/tool0_link" pos="0 -0.0335 0" quat="0.707107 0.707107 0 0">
+                      <site name="aubo_i5/attachment_site" class="aubo_i5/" pos="0 0 0"/>
+                      <site name="aubo_i5/eef_site" class="aubo_i5/" pos="0 0 0.2" quat="0 -0.707107 -0.707107 0"/>
+                      <body name="aubo_i5/g1/" quat="0 0 0 1">
+                        <body name="aubo_i5/g1/right_elbow_roll_link" quat="0 0.707107 0 0.707107">
+                          <inertial pos="0.133814 -0.00147121 0.000265832" quat="0.707107 0.707107 0 0" mass="0.050826" diaginertia="0.00239763 0.00226639 0.000285577"/>
+                          <joint name="aubo_i5/g1/right_elbow_roll_joint" class="aubo_i5/g1/" pos="0 0 0" axis="1 0 0" range="-2.0943 2.0943"/>
+                          <geom name="aubo_i5/g1//unnamed_geom_0" class="aubo_i5/g1/" type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_elbow_roll_link"/>
+                          <geom name="aubo_i5/g1//unnamed_geom_1" class="aubo_i5/g1/" type="mesh" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_elbow_roll_link"/>
+                          <geom name="aubo_i5/g1//unnamed_geom_2" class="aubo_i5/g1/" pos="0.12 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_palm_link"/>
+                          <geom name="aubo_i5/g1//unnamed_geom_3" class="aubo_i5/g1/" pos="0.12 0 0" type="mesh" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_palm_link"/>
+                          <body name="aubo_i5/g1/right_zero_link" pos="0.17 0 0">
+                            <inertial pos="-0.0260466 0.00877511 1.08605e-05" quat="0.381376 0.59241 -0.389884 0.592953" mass="0.0509893" diaginertia="8.68047e-06 7.23365e-06 4.58058e-06"/>
+                            <joint name="aubo_i5/g1/right_zero_joint" class="aubo_i5/g1/" pos="0 0 0" axis="0 1 0" range="-0.523598 0.523598"/>
+                            <geom name="aubo_i5/g1//unnamed_geom_4" class="aubo_i5/g1/" type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_zero_link"/>
+                            <body name="aubo_i5/g1/right_one_link" pos="-0.026525 0.0188 -5e-05">
+                              <inertial pos="-0.00181538 0.0327057 -0.000185871" quat="0.698199 0.701646 0.116289 -0.0817825" mass="0.047762" diaginertia="8.03051e-06 7.8455e-06 3.65282e-06"/>
+                              <joint name="aubo_i5/g1/right_one_joint" class="aubo_i5/g1/" pos="0 0 0" axis="0 0 1" range="-1.2 1"/>
+                              <geom name="aubo_i5/g1//unnamed_geom_5" class="aubo_i5/g1/" type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_one_link"/>
+                              <geom name="aubo_i5/g1//unnamed_geom_6" class="aubo_i5/g1/" size="0.01 0.015 0.01" pos="-0.001 0.032 0" type="box" rgba="0.7 0.7 0.7 1"/>
+                              <body name="aubo_i5/g1/right_two_link" pos="0 0.0431 0">
+                                <inertial pos="-0.00135257 0.0237591 -0.000119669" quat="0.695316 0.717995 0.0263741 0.0180122" mass="0.0138584" diaginertia="2.55338e-06 2.04399e-06 9.3995e-07"/>
+                                <joint name="aubo_i5/g1/right_two_joint" class="aubo_i5/g1/" pos="0 0 0" axis="0 0 1" range="-1.84 0"/>
+                                <geom name="aubo_i5/g1//unnamed_geom_7" class="aubo_i5/g1/" type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_two_link"/>
+                                <geom name="aubo_i5/g1//unnamed_geom_8" class="aubo_i5/g1/" type="mesh" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_two_link"/>
+                              </body>
+                            </body>
+                          </body>
+                          <body name="aubo_i5/g1/right_three_link" pos="0.205 -0.004 0.02395">
+                            <inertial pos="0.0362561 0.0015725 0.000269899" quat="0.45376 0.5397 0.459072 0.540443" mass="0.0488469" diaginertia="8.91742e-06 8.64873e-06 3.8319e-06"/>
+                            <joint name="aubo_i5/g1/right_three_joint" class="aubo_i5/g1/" pos="0 0 0" axis="0 0 1" range="-0.3 1.84"/>
+                            <geom name="aubo_i5/g1//unnamed_geom_9" class="aubo_i5/g1/" type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_three_link"/>
+                            <geom name="aubo_i5/g1//unnamed_geom_10" class="aubo_i5/g1/" type="mesh" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_three_link"/>
+                            <body name="aubo_i5/g1/right_four_link" pos="0.0471 0.0036 0">
+                              <inertial pos="0.0237591 -0.00135257 0.000119669" quat="0.504399 0.526348 0.48905 0.478926" mass="0.0138584" diaginertia="2.55338e-06 2.04399e-06 9.3995e-07"/>
+                              <joint name="aubo_i5/g1/right_four_joint" class="aubo_i5/g1/" pos="0 0 0" axis="0 0 1" range="0 1.84"/>
+                              <geom name="aubo_i5/g1//unnamed_geom_11" class="aubo_i5/g1/" type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_four_link"/>
+                              <geom name="aubo_i5/g1//unnamed_geom_12" class="aubo_i5/g1/" type="mesh" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_four_link"/>
+                            </body>
+                          </body>
+                          <body name="aubo_i5/g1/right_five_link" pos="0.205 -0.004 -0.02395">
+                            <inertial pos="0.0362561 0.0015725 0.000269899" quat="0.45376 0.5397 0.459072 0.540443" mass="0.0488469" diaginertia="8.91742e-06 8.64873e-06 3.8319e-06"/>
+                            <joint name="aubo_i5/g1/right_five_joint" class="aubo_i5/g1/" pos="0 0 0" axis="0 0 1" range="-0.3 1.84"/>
+                            <geom name="aubo_i5/g1//unnamed_geom_13" class="aubo_i5/g1/" type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_five_link"/>
+                            <geom name="aubo_i5/g1//unnamed_geom_14" class="aubo_i5/g1/" type="mesh" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_five_link"/>
+                            <body name="aubo_i5/g1/right_six_link" pos="0.0471 0.0036 0">
+                              <inertial pos="0.0237591 -0.00135257 0.000119669" quat="0.504399 0.526348 0.48905 0.478926" mass="0.0138584" diaginertia="2.55338e-06 2.04399e-06 9.3995e-07"/>
+                              <joint name="aubo_i5/g1/right_six_joint" class="aubo_i5/g1/" pos="0 0 0" axis="0 0 1" range="0 1.84"/>
+                              <geom name="aubo_i5/g1//unnamed_geom_15" class="aubo_i5/g1/" type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_six_link"/>
+                              <geom name="aubo_i5/g1//unnamed_geom_16" class="aubo_i5/g1/" type="mesh" rgba="0.7 0.7 0.7 1" mesh="aubo_i5/g1/right_six_link"/>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+    <body name="simple_block/" pos="0.5 0 0">
+      <joint name="simple_block/" type="free" limited="false" actuatorfrclimited="false"/>
+      <body name="simple_block/block">
+        <inertial pos="0.015 0.015 0.015" mass="0.03" diaginertia="0.0001 0.0001 0.0001"/>
+        <geom name="simple_block/block_geom" class="simple_block/" size="0.03 0.03 0.03" type="box" rgba="0 1 0 1"/>
+      </body>
+    </body>
+  </worldbody>
+  <contact>
+    <exclude name="aubo_i5//unnamed_contact_0" body1="aubo_i5/base_link" body2="aubo_i5/shoulder_link"/>
+  </contact>
+  <actuator>
+    <general name="aubo_i5/g1/right_elbow_roll_joint" class="aubo_i5/g1/" joint="aubo_i5/g1/right_elbow_roll_joint" ctrllimited="true" ctrlrange="-20 20"/>
+    <general name="aubo_i5/g1/right_zero_joint" class="aubo_i5/g1/" joint="aubo_i5/g1/right_zero_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
+    <general name="aubo_i5/g1/right_one_joint" class="aubo_i5/g1/" joint="aubo_i5/g1/right_one_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
+    <general name="aubo_i5/g1/right_two_joint" class="aubo_i5/g1/" joint="aubo_i5/g1/right_two_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
+    <general name="aubo_i5/g1/right_three_joint" class="aubo_i5/g1/" joint="aubo_i5/g1/right_three_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
+    <general name="aubo_i5/g1/right_four_joint" class="aubo_i5/g1/" joint="aubo_i5/g1/right_four_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
+    <general name="aubo_i5/g1/right_five_joint" class="aubo_i5/g1/" joint="aubo_i5/g1/right_five_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
+    <general name="aubo_i5/g1/right_six_joint" class="aubo_i5/g1/" joint="aubo_i5/g1/right_six_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
+  </actuator>
+</mujoco>

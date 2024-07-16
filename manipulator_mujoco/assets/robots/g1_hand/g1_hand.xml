@@ -52,7 +52,7 @@
   <worldbody>
             <body name="right_elbow_roll_link" pos="0 0 0" quat="0 0.7 0 .7">
               <inertial pos="0.133814 -0.00147121 0.000265832" quat="0.7 0.7 0 0" mass="0.050826" diaginertia="0.00239763 0.00226639 0.000285577"/>
-              <joint name="right_elbow_roll_joint" pos="0 0 0" axis="1 0 0" range="-2.0943 2.0943"/>
+              <joint name="right_elbow_roll_joint" pos="0 0 0" axis="1 0 0" range="-0.0143 0.0143"/>
               <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="right_elbow_roll_link"/>
               <geom type="mesh" rgba="0.7 0.7 0.7 1" mesh="right_elbow_roll_link"/>
               <geom pos="0.12 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="right_palm_link"/>
