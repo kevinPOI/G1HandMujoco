@@ -9,6 +9,9 @@
   </compiler>
 </mujoco> -->
 <mujoco model="lego_2x8">
+<option>
+    <flag multiccd="enable"/>
+  </option>
     <compiler angle="radian" meshdir = "meshes"/>
     <asset>
       <mesh name="mesh" file="b2x8.stl" scale="0.001 0.001 0.001"/>

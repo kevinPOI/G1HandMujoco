@@ -6,3 +6,4 @@ from manipulator_mujoco.robots.gripper import Gripper
 from manipulator_mujoco.robots.block import Block
 from manipulator_mujoco.robots.lego import Lego
 from manipulator_mujoco.robots.gp4 import GP4
+from manipulator_mujoco.robots.lego_tool import LegoTool

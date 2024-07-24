@@ -1,0 +1,25 @@
+
+
+<mujoco model="lego_tool">
+  <option>
+    <flag multiccd="enable"/>
+  </option>
+  <compiler angle="radian" meshdir = "meshes"/>
+  <asset>
+    <mesh name="tool_base_tilt" file="tool_base_tilt.stl"/>
+    <mesh name="tool_camera" file="tool_camera.stl"/>
+  </asset>
+  <worldbody>
+    <body name="link_tool" pos="0 0 0" quat="1 0 0 0">
+      <inertial pos="0 -0.0311005 -0.0029538" quat="0.446522 0.549081 -0.548499 0.445283" mass="0.21624" diaginertia="0.00053688 0.00039517 0.000216651"/>
+      <geom pos="0 0 0" quat="0 0 0 1" type="mesh" rgba="0.15 0.15 0.15 1" mesh="tool_base_tilt"/>
+      <geom size="5e-05 5e-05 5e-05" pos="0 -0.0745685 0.0248492" quat="0.653281 0.270598 -0.270598 0.653281" type="box"/>
+      <body name="link_tip" pos="0 0 0.071" quat="1 0 0 0">
+        <geom name="block_geom" type="box" size="0.005 0.006 0.003" rgba="0 1 0 1" friction="5.5" margin=".003" solimp="0 .99 .003 .9 6"/>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <adhesion name="suction_site" body="link_tip" ctrlrange="0 1" gain="20"/>
+  </actuator>
+</mujoco>

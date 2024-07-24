@@ -6,7 +6,7 @@ import mujoco.viewer
 import gymnasium as gym
 from gymnasium import spaces
 from manipulator_mujoco.arenas import StandardArena
-from manipulator_mujoco.robots import AuboI5, AG95, G1Hand, Block, GP4,Lego
+from manipulator_mujoco.robots import AuboI5, AG95, G1Hand, Block, GP4,Lego, LegoTool
 from manipulator_mujoco.props import Primitive
 from manipulator_mujoco.mocaps import Target
 from manipulator_mujoco.controllers import OperationalSpaceController, JointEffortController
@@ -40,7 +40,7 @@ def set_x_rotation(quaternion, x):
     # Convert quaternion to Euler angles
     euler_angles = rotation.as_euler('xyz', degrees=False)
     
-    # Set the y-axis rotation to zero
+    # Set the x-axis rotation to zero
     euler_angles[0] = x
     
     # Convert back to quaternion
@@ -64,6 +64,11 @@ def set_z_rotation(quaternion, z):
     new_quaternion = new_rotation.as_quat()
     
     return new_quaternion
+
+def xyz_to_quat(xyz):
+    new_rotation = scipy.spatial.transform.Rotation.from_euler('xyz', xyz)
+    quat = new_rotation.as_quat()
+    return quat
 class GP4Env(gym.Env):
 
     metadata = {
@@ -72,6 +77,7 @@ class GP4Env(gym.Env):
     }  # TODO add functionality to render_fps
 
     def __init__(self, render_mode=None):
+        self.tool = False
         # TODO come up with an observation space that makes sense
         self.observation_space = spaces.Box(
             low=-np.inf, high=np.inf, shape=(6,), dtype=np.float64
@@ -101,8 +107,12 @@ class GP4Env(gym.Env):
         self._lego_2x8 = Lego("lego_2x8.xml")
         #self._gripper = AG95()
         self._gripper = G1Hand()
+        self._tool = LegoTool()
         # attach gripper to arm
-        self._arm.attach_tool(self._gripper.mjcf_model, pos=[0.05, 0, 0], quat=[0.5, 0.5, 0.5, 0.5])
+        if self.tool:
+            self._arm.attach_tool(self._tool.mjcf_model, pos=[0.09725, 0, 0], quat=xyz_to_quat([0,1.57,0]))
+        else:
+            self._arm.attach_tool(self._gripper.mjcf_model, pos=[0.05, 0, 0], quat=[0.5, 0.5, 0.5, 0.5])
 
         # small box to be manipulated
         #self._box = Primitive(self._arena.mjcf_model, type="box", size=[0.03, 0.03, 0.03], pos=[0,0,0.02], rgba=[1, 0, 0, 1], friction=[1, 0.3, 0.0001])
@@ -114,9 +124,9 @@ class GP4Env(gym.Env):
 
         # attach box to arena as free joint
         self._arena.attach_free(
-            self._block.mjcf_model, pos=[0.6,0.2,0]
+            self._block.mjcf_model, pos=[0.5,0.2,0]
         )
-        self._arena.attach_free(self._lego_2x8.mjcf_model, pos = [0.6, 0, 0], quat=[0.7,0,0, 0.7])
+        self._arena.attach_free(self._lego_2x8.mjcf_model, pos = [0.5, 0, 0], quat=[0.7,0,0, 0.7])
        
         # generate model
         self._physics = mjcf.Physics.from_mjcf_model(self._arena.mjcf_model)
@@ -187,7 +197,7 @@ class GP4Env(gym.Env):
             # put arm in a reasonable starting position
             self._physics.bind(self._arm.joints).qpos = [0, 0, 1.5707, 0, 1.5707]
             # put target in a reasonable starting position
-            self._target.set_mocap_pose(self._physics, position=[0.6, 0, 0.08], quaternion=[0, 0, 0, 1])
+            self._target.set_mocap_pose(self._physics, position=[0.5, 0, 0.06], quaternion=[0, 0, 0, 1])
 
         observation = self._get_obs()
         info = self._get_info()
@@ -212,8 +222,12 @@ class GP4Env(gym.Env):
         target_pose = self._target.get_mocap_pose(self._physics)
         
         #target_pose = block_pose
-        target_pose[3:] = set_y_rotation(ee_pose[3:],0)#ignore rotational target
-        target_pose[3:] = set_x_rotation(target_pose[3:], 3.44)
+        
+        if self.tool:
+            target_pose[3:] = set_x_rotation(ee_pose[3:], 4.6)
+        else:
+            target_pose[3:] = set_y_rotation(ee_pose[3:],0)#ignore rotational target
+            target_pose[3:] = set_x_rotation(target_pose[3:], 3.44)
         dest_pose = np.asarray([0.5,0.2,0.2,0,0,0,1])
 
         # run OSC controller to move to target pose
@@ -236,24 +250,14 @@ class GP4Env(gym.Env):
         #     target_pose = dest_pose
         
         grip_target = action * m + b
-        self.gripper_to(grip_target)
+        if(not self.tool):
+            self.gripper_to(grip_target)
         
         if counter % 50 == 0:
             print("ee_pose: ", ee_pose, "\ntarget_pose: ", target_pose)
             ee_rot = scipy.spatial.transform.Rotation.from_quat(ee_pose[3:]).as_euler('xyz', degrees=False)
             target_rot = scipy.spatial.transform.Rotation.from_quat(target_pose[3:]).as_euler('xyz', degrees=False)
             print("ee_rot: ", ee_rot, "target_rot:", target_rot)
-        
-        # if(np.linalg.norm(self._get_obs()[0:3] - np.array([0.5,0,0.02]))) < 0.5:
-        #     #arm_eef_pos = self._physics.bind(self._arm.eef_site).xpos
-        #     #self._physics.bind(self._gripper.joint).qfrc_applied = 4
-        #     #print("eef_site: ", joint_pos)
-        #     #print("arm_eef_site: ", arm_eef_pos)
-        #     self._controller.run(target_pose)
-        #     #self._gripper_controller.run(2)
-        # else:
-        #     #self._physics.bind(self._gripper.joint).qfrc_applied = -3
-        #     self._controller.run(target_pose)
         self._controller.run(target_pose)
 
         # step physics
