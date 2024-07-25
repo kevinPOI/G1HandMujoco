@@ -111,22 +111,21 @@ class GP4Env(gym.Env):
         # attach gripper to arm
         if self.tool:
             self._arm.attach_tool(self._tool.mjcf_model, pos=[0.09725, 0, 0], quat=xyz_to_quat([0,1.57,0]))
+            self._arena.attach_free(self._block.mjcf_model, pos=[0.5,0.2,0])
+            self._arena.attach_free(self._lego_2x8.mjcf_model, pos = [0.5, 0, 0], quat=[0.7,0,0, 0.7])
         else:
             self._arm.attach_tool(self._gripper.mjcf_model, pos=[0.05, 0, 0], quat=[0.5, 0.5, 0.5, 0.5])
-
-        # small box to be manipulated
-        #self._box = Primitive(self._arena.mjcf_model, type="box", size=[0.03, 0.03, 0.03], pos=[0,0,0.02], rgba=[1, 0, 0, 1], friction=[1, 0.3, 0.0001])
-
+            self._arena.attach_free(
+                self._block.mjcf_model, pos=[0.6,0,0]
+            )
+            self._arena.attach_free(self._lego_2x8.mjcf_model, pos = [0.6, 0.1, 0], quat=[0.7,0,0, 0.7])
         # attach arm to arena
         self._arena.attach(
             self._arm.mjcf_model, pos=[0,0,0]
         )
 
         # attach box to arena as free joint
-        self._arena.attach_free(
-            self._block.mjcf_model, pos=[0.5,0.2,0]
-        )
-        self._arena.attach_free(self._lego_2x8.mjcf_model, pos = [0.5, 0, 0], quat=[0.7,0,0, 0.7])
+        
        
         # generate model
         self._physics = mjcf.Physics.from_mjcf_model(self._arena.mjcf_model)
@@ -197,7 +196,7 @@ class GP4Env(gym.Env):
             # put arm in a reasonable starting position
             self._physics.bind(self._arm.joints).qpos = [0, 0, 1.5707, 0, 1.5707]
             # put target in a reasonable starting position
-            self._target.set_mocap_pose(self._physics, position=[0.5, 0, 0.06], quaternion=[0, 0, 0, 1])
+            self._target.set_mocap_pose(self._physics, position=[0.48, 0, 0.25], quaternion=[0, 0, 0, 1])
 
         observation = self._get_obs()
         info = self._get_info()
@@ -224,7 +223,11 @@ class GP4Env(gym.Env):
         #target_pose = block_pose
         
         if self.tool:
+            #target_pose[3:] = set_y_rotation(ee_pose[3:],0)
             target_pose[3:] = set_x_rotation(ee_pose[3:], 4.6)
+            #target_pose[3:] =  ee_pose[3:]
+            pass
+            
         else:
             target_pose[3:] = set_y_rotation(ee_pose[3:],0)#ignore rotational target
             target_pose[3:] = set_x_rotation(target_pose[3:], 3.44)
@@ -233,10 +236,10 @@ class GP4Env(gym.Env):
         # run OSC controller to move to target pose
         block_coe = np.asarray([0,-1,-1,1,1,1,1])
         lego_coe = np.asarray([0,-0.3,-0.3,1,1,1,1])
-        m = lego_coe
+        m = block_coe
         block_init = np.asarray([0,-0.3,-0.6,0.3,0.3,0.3,0.3])#[thumb_pan, thumb1, thumb2, index_1, index_2, middle_1, middle_2]
         lego_init = np.asarray([0,-0.4,-0.4,0.9,0.6,0.9,0.6])
-        b = lego_init
+        b = block_init
         # if np.linalg.norm(ee_pose[:2] - block_pose[:2]) < 0.1 and np.linalg.norm(ee_pose[2] - block_pose[2]) < 0.04:
         #     mode = 0
         if mode == 0:

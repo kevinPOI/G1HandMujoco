@@ -20,7 +20,8 @@
         <!-- Define the block -->
         <body name="block" pos="0 0 0">
             <inertial pos="0.0 0.0 0.0" quat="1 0 0 0" mass="0.003" diaginertia="0.000001 0.000001 0.000001"/>
-            <geom type="mesh" rgba="0.9 0.4 0.1 1" mesh="mesh"/>
+            <geom type="mesh" rgba="0.9 0.4 0.1 1" mesh="mesh" contype="0" conaffinity="0"/>
+            <geom name="block_geom" type="box" pos="0.0 0.0 -0.004" size="0.03 0.008 0.005" rgba="0 1 0 1" friction = ".5"/>
             <!-- <joint name="block_free" type="free"/> -->
         </body>
     </worldbody>

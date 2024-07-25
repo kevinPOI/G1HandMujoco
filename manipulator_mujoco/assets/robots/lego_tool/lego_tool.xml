@@ -2,24 +2,60 @@
 
 <mujoco model="lego_tool">
   <option>
+  
     <flag multiccd="enable"/>
   </option>
+  <option viscosity="1"/>
   <compiler angle="radian" meshdir = "meshes"/>
   <asset>
     <mesh name="tool_base_tilt" file="tool_base_tilt.stl"/>
     <mesh name="tool_camera" file="tool_camera.stl"/>
   </asset>
+  <default>
+  <geom type="box" friction=".5"/>
+   <default class="active_adhesion">
+      <!--
+        Geoms in the active_adhesion class are "inflated" with a margin of 1cm, but contacts are
+        activated only at a depth gap of 1cm, leading to a layer of inactive contacts at a 1cm
+        distance from the surface. However the contacts can be used by the adhesion actuator.
+      -->
+      <geom rgba=".8 .5 .5 1" margin=".001" gap=".001"/>
+    </default>
+  </default>
   <worldbody>
     <body name="link_tool" pos="0 0 0" quat="1 0 0 0">
       <inertial pos="0 -0.0311005 -0.0029538" quat="0.446522 0.549081 -0.548499 0.445283" mass="0.21624" diaginertia="0.00053688 0.00039517 0.000216651"/>
       <geom pos="0 0 0" quat="0 0 0 1" type="mesh" rgba="0.15 0.15 0.15 1" mesh="tool_base_tilt"/>
       <geom size="5e-05 5e-05 5e-05" pos="0 -0.0745685 0.0248492" quat="0.653281 0.270598 -0.270598 0.653281" type="box"/>
-      <body name="link_tip" pos="0 0 0.071" quat="1 0 0 0">
-        <geom name="block_geom" type="box" size="0.005 0.006 0.003" rgba="0 1 0 1" friction="5.5" margin=".003" solimp="0 .99 .003 .9 6"/>
+      <!-- <body name="link_tip" pos="0 0 0.09" quat="1 0 0 0">
+        <inertial pos="0.015 0.015 0.015" quat="1 0 0 0" mass="0.03" diaginertia="0.0001 0.0001 0.0001"/>
+        <geom type="box" size="0.05 0.06 0.01" rgba="0 1 0 1" friction="0.5" margin=".001" gap = " 0.001" solimp="0 .99 .003 .9 6"/>
+      </body> -->
+      <body name="link_tip" pos="0 0 0.075" childclass="active_adhesion" >
+          <site name="force_sensor" group="3"/>
+          <geom size=".0025 .0025 .001" pos="0.0015 0.0015 0" type="box" friction="0.5"/>
+          <geom size=".0025 .0025 .001" pos="0.0015 -0.0015 0" type="box" friction="0.5"/>
+          <geom size=".0025 .0025 .001" pos="-0.0015 0.0015 0" type="box" friction="0.5"/>
+          <geom size=".0025 .0025 .001" pos="-0.0015 -0.0015 0" type="box" friction="0.5"/>
+      </body>
+      <body name="link_tip2" pos="0.004 0.004 0.075" childclass="active_adhesion" >
+
+          <geom size=".0025 .0025 .001" pos="0.0015 0.0015 0" type="box" friction="0.5"/>
+          <geom size=".0025 .0025 .001" pos="0.0015 -0.0015 0" type="box" friction="0.5"/>
+          <geom size=".0025 .0025 .001" pos="-0.0015 0.0015 0" type="box" friction="0.5"/>
+          <geom size=".0025 .0025 .001" pos="-0.0015 -0.0015 0" type="box" friction="0.5"/>
+      </body>
+      <body name="link_tip3" pos="0.004 -0.004 0.075" childclass="active_adhesion" >
+          <geom size=".0025 .0025 .001" pos="0.0015 0.0015 0" type="box" friction="0.5"/>
+          <geom size=".0025 .0025 .001" pos="0.0015 -0.0015 0" type="box" friction="0.5"/>
+          <geom size=".0025 .0025 .001" pos="-0.0015 0.0015 0" type="box" friction="0.5"/>
+          <geom size=".0025 .0025 .001" pos="-0.0015 -0.0015 0" type="box" friction="0.5"/>
       </body>
     </body>
   </worldbody>
   <actuator>
-    <adhesion name="suction_site" body="link_tip" ctrlrange="0 1" gain="20"/>
+    <adhesion name="suction_site" body="link_tip" ctrlrange="0 1" gain="5"/>
+    <adhesion name="suction_site2" body="link_tip2" ctrlrange="0 1" gain="5"/>
+    <adhesion name="suction_site3" body="link_tip3" ctrlrange="0 1" gain="5"/>
   </actuator>
 </mujoco>
