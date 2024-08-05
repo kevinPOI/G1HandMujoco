@@ -26,7 +26,7 @@
         <geom type="mesh" rgba="0.129412 0.14902 0.74902 1" mesh="link_2"/>
         <body name="link_3" pos="0 0 0.26">
           <inertial pos="0.086423 0.14427 -0.035793" quat="0.632481 0.663767 0.0137265 -0.398989" mass="28.467" diaginertia="0.776076 0.668163 0.43752"/>
-          <joint name="joint_3" pos="0 0 0" axis="0 -1 0"/>
+          <joint name="joint_3" pos="0 0 0" axis="0 -1 0" range="-0.2 0.7"/>
           <geom type="mesh" rgba="0.129412 0.14902 0.74902 1" mesh="link_3"/>
           <body name="link_4" pos="0.29 0 0.015">
             <inertial pos="0.37337 0.00033491 0.012656" quat="0.509567 0.48893 0.476159 0.523985" mass="7.629" diaginertia="0.480722 0.478635 0.0159838"/>
@@ -52,14 +52,4 @@
       </body>
     </body>
   </worldbody>
-  <actuator>
-    <motor name="a1" joint="joint_1" ctrllimited="true" ctrlrange="-20000 20000"/>
-    <motor name="a2" joint="joint_2" ctrllimited="true" ctrlrange="-2000 2000"/>
-    <!-- <motor name="right_one_joint" joint="right_one_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
-    <motor name="right_two_joint" joint="right_two_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
-    <motor name="right_three_joint" joint="right_three_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
-    <motor name="right_four_joint" joint="right_four_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
-    <motor name="right_five_joint" joint="right_five_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
-    <motor name="right_six_joint" joint="right_six_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/> -->
-  </actuator>
 </mujoco>

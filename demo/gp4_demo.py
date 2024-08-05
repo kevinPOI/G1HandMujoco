@@ -2,7 +2,7 @@ import gymnasium
 import manipulator_mujoco
 import threading
 import glfw
-
+import ast
 # Create the environment with rendering in human mode
 env = gymnasium.make('manipulator_mujoco/GP4Env-v0', render_mode='human')
 
@@ -17,7 +17,13 @@ def take_input():
             mode = float(n)
         except:
             print("wrong input")
-            continue
+        try:
+            l = ast.literal_eval(n)
+            if isinstance(l, list):
+                if len(l) == 6:
+                    mode = l
+        except:
+            print("wrong input 27")
 t1 = threading.Thread(target=take_input)
 t1.daemon = True
 t1.start()
@@ -28,7 +34,8 @@ while True:
     observation, reward, terminated, truncated, info = env.step(mode)
 
     # Check if the episode is over (terminated) or max steps reached (truncated)
-    if terminated or truncated:
+    if terminated or truncated or mode == 42:
+        mode = 0
         # If the episode ends or is truncated, reset the environment
         observation, info = env.reset()
 

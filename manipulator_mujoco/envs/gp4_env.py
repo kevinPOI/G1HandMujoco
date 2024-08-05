@@ -1,7 +1,9 @@
 import time
+import os 
 import threading
 import numpy as np
 from dm_control import mjcf
+from dm_control.utils import inverse_kinematics as ik
 import mujoco.viewer
 import gymnasium as gym
 from gymnasium import spaces
@@ -69,6 +71,18 @@ def xyz_to_quat(xyz):
     new_rotation = scipy.spatial.transform.Rotation.from_euler('xyz', xyz)
     quat = new_rotation.as_quat()
     return quat
+
+def pose_xyz_to_quat(pose):
+    xyz = pose[3:]
+    new_rotation = scipy.spatial.transform.Rotation.from_euler('xyz', xyz)
+    quat = new_rotation.as_quat()
+    return np.concatenate([pose[:3], quat])
+
+def quat_to_xyz(quat):
+    new_rotation = scipy.spatial.transform.Rotation.from_quat(quat)
+    xyz = new_rotation.as_euler('xyz')
+    return xyz
+
 class GP4Env(gym.Env):
 
     metadata = {
@@ -103,6 +117,12 @@ class GP4Env(gym.Env):
 
         # aubo i5 arm
         self._arm = GP4()
+        _GP4_XML = os.path.join(
+            os.path.dirname(__file__),
+            '../assets/robots/gp4/gp4.xml',
+        )
+        # self._arm_physics = mujoco.Physics.from_xml_path(_GP4_XML)
+        # self._arm_physics.mjcf.Physics.from_mjcf_model(self._arena.mjcf_model)
         self._block = Block()
         self._lego_2x8 = Lego("lego_2x8.xml")
         #self._gripper = AG95()
@@ -135,8 +155,8 @@ class GP4Env(gym.Env):
             physics=self._physics,
             joints=self._arm.joints,
             eef_site=self._arm.eef_site,
-            min_effort=-1500.0,
-            max_effort=1500.0,
+            min_effort=-15000.0,
+            max_effort=15000.0,
             kp=3000,
             ko=3000,
             kv=100,
@@ -218,19 +238,9 @@ class GP4Env(gym.Env):
         ee_pose, block_pose = self._get_obs()
 
         # get mocap target pose
-        target_pose = self._target.get_mocap_pose(self._physics)
+        target_r = xyz_to_quat([0,0,1.5])
+        target_pose = pose_xyz_to_quat(np.array([0.45,0,0.3,0,0,1.5]))
         
-        #target_pose = block_pose
-        
-        if self.tool:
-            #target_pose[3:] = set_y_rotation(ee_pose[3:],0)
-            target_pose[3:] = set_x_rotation(ee_pose[3:], 4.6)
-            #target_pose[3:] =  ee_pose[3:]
-            pass
-            
-        else:
-            target_pose[3:] = set_y_rotation(ee_pose[3:],0)#ignore rotational target
-            target_pose[3:] = set_x_rotation(target_pose[3:], 3.44)
         dest_pose = np.asarray([0.5,0.2,0.2,0,0,0,1])
 
         # run OSC controller to move to target pose
@@ -240,28 +250,39 @@ class GP4Env(gym.Env):
         block_init = np.asarray([0,-0.3,-0.6,0.3,0.3,0.3,0.3])#[thumb_pan, thumb1, thumb2, index_1, index_2, middle_1, middle_2]
         lego_init = np.asarray([0,-0.4,-0.4,0.9,0.6,0.9,0.6])
         b = block_init
-        # if np.linalg.norm(ee_pose[:2] - block_pose[:2]) < 0.1 and np.linalg.norm(ee_pose[2] - block_pose[2]) < 0.04:
-        #     mode = 0
-        if mode == 0:
+        if isinstance(mode, list):#list: set ee position
+            target_pose_raw = np.asarray(mode)
+            quat = xyz_to_quat(target_pose_raw[3:])
+            target_pose = np.concatenate([target_pose_raw[:3], quat])
             action = 0
-        else:
+        else:#number: set grip
             action = mode
-        #     m1_counter += 1
-        # else:
-        #     action = 0
-        # if m1_counter > 800:
-        #     target_pose = dest_pose
         
         grip_target = action * m + b
         if(not self.tool):
             self.gripper_to(grip_target)
+
+        if self.tool:
+            #target_pose[3:] = set_y_rotation(ee_pose[3:],0)
+            target_pose[3:] = set_x_rotation(ee_pose[3:], 4.6)
+            #target_pose[3:] =  ee_pose[3:]
+            pass
+            
+        else:
+            target_rot = target_pose[3:]
+            target_rot_xyz = quat_to_xyz(target_pose[3:])
+            ee_pose_xyz = quat_to_xyz(ee_pose[3:])
+            target_rot_xyz[0] = 3.5
+            target_rot_xyz[1] = 0
+            target_rot_xyz[2] = 0.02 * target_rot_xyz[2] + 0.98 * ee_pose_xyz[2]
+            target_pose[3:] = xyz_to_quat(target_rot_xyz)
         
-        if counter % 50 == 0:
-            print("ee_pose: ", ee_pose, "\ntarget_pose: ", target_pose)
-            ee_rot = scipy.spatial.transform.Rotation.from_quat(ee_pose[3:]).as_euler('xyz', degrees=False)
-            target_rot = scipy.spatial.transform.Rotation.from_quat(target_pose[3:]).as_euler('xyz', degrees=False)
-            print("ee_rot: ", ee_rot, "target_rot:", target_rot)
-        self._controller.run(target_pose)
+        # if counter % 50 == 0:
+        #     print("ee_pose: ", ee_pose, "\ntarget_pose: ", target_pose)
+        #     ee_rot = scipy.spatial.transform.Rotation.from_quat(ee_pose[3:]).as_euler('xyz', degrees=False)
+        #     target_rot = scipy.spatial.transform.Rotation.from_quat(target_pose[3:]).as_euler('xyz', degrees=False)
+        #     print("ee_rot: ", ee_rot, "target_rot:", target_rot)
+        self._controller.run_v2(target_pose)
 
         # step physics
         self._physics.step()

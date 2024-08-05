@@ -4,7 +4,7 @@
     <flag multiccd="enable"/>
   </option>
   <compiler angle="radian" meshdir = "meshes"/>
-  <asset>
+  <!-- <asset>
     <mesh name="base_link" file="base_link.stl"/>
     <mesh name="link_1" file="link_1.stl"/>
     <mesh name="link_2" file="link_2.stl"/>
@@ -13,33 +13,33 @@
     <mesh name="link_5" file="link_5.stl"/>
     <mesh name="link_6" file="link_6.stl"/>
     <mesh name="tool_camera" file="tool_camera.stl"/>
-  </asset>
+  </asset> -->
   <worldbody>
-    <geom type="mesh" rgba="0.129412 0.14902 0.74902 1" mesh="base_link"/>
+
     <body name="link_1" pos="0 0 0.33">
       <inertial pos="0.058962 0.24363 -0.018725" quat="0.154737 0.465754 0.464201 0.737324" mass="37.265" diaginertia="1.20179 1.05429 0.8459"/>
       <joint name="joint_1" pos="0 0 0" axis="0 0 1"/>
-      <geom type="mesh" rgba="0.129412 0.14902 0.74902 1" mesh="link_1"/>
+
       <body name="link_2">
         <inertial pos="3.5083e-05 0.39008 0.15036" quat="0.490897 0.516951 -0.510135 0.48119" mass="22.632" diaginertia="1.83109 1.7745 0.150015"/>
         <joint name="joint_2" pos="0 0 0" axis="0 1 0"/>
-        <geom type="mesh" rgba="0.129412 0.14902 0.74902 1" mesh="link_2"/>
+
         <body name="link_3" pos="0 0 0.26">
           <inertial pos="0.086423 0.14427 -0.035793" quat="0.632481 0.663767 0.0137265 -0.398989" mass="28.467" diaginertia="0.776076 0.668163 0.43752"/>
-          <joint name="joint_3" pos="0 0 0" axis="0 -1 0"/>
-          <geom type="mesh" rgba="0.129412 0.14902 0.74902 1" mesh="link_3"/>
+          <joint name="joint_3" pos="0 0 0" axis="0 -1 0" range="-0.2 0.7"/>
+
           <body name="link_4" pos="0.29 0 0.015">
             <inertial pos="0.37337 0.00033491 0.012656" quat="0.509567 0.48893 0.476159 0.523985" mass="7.629" diaginertia="0.480722 0.478635 0.0159838"/>
             <joint name="joint_4" pos="0 0 0" axis="-1 0 0"/>
-            <geom type="mesh" rgba="0.129412 0.14902 0.74902 1" mesh="link_4"/>
+
             <body name="link_5">
               <inertial pos="0.062818 3.3289e-05 0.0048991" quat="0.680253 -0.192363 -0.192195 0.680671" mass="2.5794" diaginertia="0.021382 0.0161834 0.0124506"/>
               <joint name="joint_5" pos="0 0 0" axis="0 -1 0"/>
-              <geom type="mesh" rgba="0.129412 0.14902 0.74902 1" mesh="link_5"/>
+
               <body name="link_6">
                 <inertial pos="0.0001688 -0.000630122 -0.00826524" quat="-0.00317061 0.707104 0.000914425 0.707101" mass="0.10812" diaginertia="0.000179275 9.31201e-05 9.11296e-05"/>
 
-                <geom type="mesh" rgba="0.8 0.8 0.8 1" mesh="link_6"/>
+
                 <geom size="0.035 0.0205" pos="0.09725 0 0" quat="0.707107 0 0.707107 0" type="cylinder"/>
 
                 <site name="attachment_site" pos="-0.0 0.0 0.0" quat="0 0 0 1"/>
@@ -52,14 +52,4 @@
       </body>
     </body>
   </worldbody>
-  <actuator>
-    <motor name="a1" joint="joint_1" ctrllimited="true" ctrlrange="-20000 20000"/>
-    <motor name="a2" joint="joint_2" ctrllimited="true" ctrlrange="-2000 2000"/>
-    <!-- <motor name="right_one_joint" joint="right_one_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
-    <motor name="right_two_joint" joint="right_two_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
-    <motor name="right_three_joint" joint="right_three_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
-    <motor name="right_four_joint" joint="right_four_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
-    <motor name="right_five_joint" joint="right_five_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/>
-    <motor name="right_six_joint" joint="right_six_joint" ctrllimited="true" ctrlrange="-0.7 0.7"/> -->
-  </actuator>
 </mujoco>
